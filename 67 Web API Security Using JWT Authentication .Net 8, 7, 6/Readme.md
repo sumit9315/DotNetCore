@@ -123,3 +123,132 @@ Would you like me to also generate:
 * 🧠 Visual diagram of the JWT flow?
 
 Let me know — happy to continue!
+Thanks for sharing the full transcript in one line — nicely done! Based on this, here’s a **structured breakdown** of the content from the video on **JWT (JSON Web Token) in Web API**.
+
+---
+
+## 📘 Notes: Understanding JWT in Web API (Part 2)
+
+---
+
+### 🔹 What is JWT?
+
+* **JWT** stands for **JSON Web Token**.
+* It is a **popular mechanism** for securing Web APIs.
+* Information is **Base64-encoded** and transferred between client and server in a token format.
+* JWTs are:
+
+  * Lightweight
+  * URL-safe
+  * Easy to validate on the server
+* Based on **open standard**: `RFC 7519`.
+
+---
+
+### 🔹 Purpose of JWT
+
+* Used to **represent claims securely between two parties** (usually server ↔ client).
+* Used in **stateless authentication** (i.e., no session stored on server).
+* Encodes identity and role of a user or system.
+
+---
+
+### 🔹 JWT Structure
+
+A JWT has **three parts**, all Base64-encoded and separated by dots:
+
+```
+<HEADER>.<PAYLOAD>.<SIGNATURE>
+```
+
+---
+
+### 1️⃣ Header
+
+* Contains metadata about the token.
+* Example:
+
+  ```json
+  {
+    "alg": "HS256",
+    "typ": "JWT"
+  }
+  ```
+* `alg` → algorithm used (e.g., HS256, RS256, or "none").
+* `typ` → token type (usually `"JWT"`).
+* 🔴 **If `alg` is `none`**, the token is **not secure**.
+
+---
+
+### 2️⃣ Payload
+
+* The **actual data** or claims being sent.
+* Common fields:
+
+  * `id`: User ID
+  * `name`: Username
+  * `role`: User's role (admin, user, etc.)
+* Represents **who is authenticated**.
+* This info is sent to the **client** upon login.
+* When client sends the token back, server **extracts** these values for authorization.
+
+---
+
+### 3️⃣ Signature
+
+* Ensures the token was **not tampered with**.
+* Generated using:
+
+  ```
+  signature = Base64Encode(
+    HMACSHA256(
+      Base64(header) + "." + Base64(payload),
+      secret_key
+    )
+  )
+  ```
+* **Private key** (stored securely on the server) is used to generate it.
+* Without a valid signature, the token should be **rejected**.
+
+---
+
+### 🔒 Security Notes
+
+* A JWT **without a signature** is **not secure**.
+* Always ensure that your token includes and validates the signature on every API request.
+
+---
+
+### ✅ Summary
+
+| Part      | Description                                            |
+| --------- | ------------------------------------------------------ |
+| Header    | Metadata: algorithm & type                             |
+| Payload   | User data / claims (id, name, role)                    |
+| Signature | Verifies the token's integrity (generated with secret) |
+
+* JWT tokens are ideal for **stateless, secure communication** between frontend & backend.
+
+---
+
+### 📌 Real Use Case Flow
+
+1. User logs in → Server verifies credentials.
+2. Server **creates JWT** and returns to client.
+3. Client stores token (e.g., in localStorage).
+4. For each request, client sends:
+
+   ```
+   Authorization: Bearer <JWT>
+   ```
+5. Server validates token → Grants/denies access.
+
+---
+
+Let me know if you want:
+
+* ✅ A full C#/.NET implementation guide
+* 🛡️ Code to generate and validate JWT
+* 📦 How to use `Microsoft.AspNetCore.Authentication.JwtBearer`
+
+I can prepare those too!
